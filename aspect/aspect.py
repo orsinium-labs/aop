@@ -1,18 +1,22 @@
-import sys
+from collections import Callable
+
+from .joinpoint import JoinPoint
 
 
-def patch_object(aspect, advice):
-    pass
+class Aspect:
+    def __getattribute__(self, name):
+        method = super().__getattribute__(name)
+        if name[:2] == '__':
+            return method
+        if name == '_advice':
+            return method
+        if not isinstance(method, Callable):
+            return method
 
-
-def patch_module(module, advice):
-    for object_name in dir(module):
-        if advice.targets.match(object_name):
-            new_object = patch_object(getattr(module, object_name), advice)
-            setattr(module, object_name, new_object)
-
-
-def patch_past(advice):
-    for module_name, module in sys.modules.items():
-        if advice.modules.match(module_name):
-            patch_module(module, advice)
+        joinpoint = JoinPoint(
+            aspect=self.__class__.__name__,
+            method=name,
+        )
+        joinpoint._method = method
+        joinpoint._advice = self._advice
+        return joinpoint
