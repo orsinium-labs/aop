@@ -5,8 +5,9 @@ from .aspect import Aspect
 
 def patch_class(aspect, advice):
     # avoid repeated patching
-    if aspect._advice is advice:
-        return aspect
+    if hasattr(aspect, '_advice'):
+        if aspect._advice is advice:
+            return aspect
 
     # make new object name
     name = aspect.__name__
@@ -16,7 +17,7 @@ def patch_class(aspect, advice):
     # patch
     return type(
         name,
-        [Aspect, aspect],
+        (Aspect, aspect),
         {'_advice': advice},
     )
 

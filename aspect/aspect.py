@@ -12,6 +12,8 @@ class Aspect:
             return method
         if not isinstance(method, Callable):
             return method
+        if not self._advice.methods.match(name):
+            return method
 
         joinpoint = JoinPoint(
             aspect=self.__class__.__name__,

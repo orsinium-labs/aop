@@ -9,6 +9,9 @@ class Source:
     def check_me(self, a, b=None):
         return '{}|{}'.format(a, b)
 
+    def nothing(self):
+        return 42
+
 
 class Patched(Aspect, Source):
     pass
@@ -95,3 +98,15 @@ def test_raise_after():
     instance = Patched()
     with pytest.raises(ZeroDivisionError):
         instance.check_me(1, 2)
+
+
+def test_method_check():
+    def handler(context):
+        yield
+        context.result = 13
+
+    advice = Advice(methods=re.compile('check_me'), handler=handler)
+    Patched._advice = advice
+    instance = Patched()
+    result = instance.nothing()
+    assert result == 42
