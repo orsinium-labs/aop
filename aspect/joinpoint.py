@@ -19,12 +19,14 @@ class JoinPoint:
     def __call__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        advice = self._advice(self)
+        advice = self._advice.handler(self)
         next(advice)
         try:
-            self.result = self.method(*args, **kwargs)
+            self.result = self._method(*self.args, **self.kwargs)
         except Exception as e:
-            advice.throw(e)
-        with suppress(StopIteration):
-            next(advice)
+            with suppress(StopIteration):
+                advice.throw(e)
+        else:
+            with suppress(StopIteration):
+                next(advice)
         return self.result
