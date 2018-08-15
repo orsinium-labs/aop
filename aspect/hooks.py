@@ -1,11 +1,9 @@
+from .module import AspectModule
 
 
 class AspectLoader():
     def create_module(self, spec):
         module = super().create_module(spec)
-        ...
-        return module
-
-    def exec_module(self, module):
-        super().exec_module(module)
-        ...
+        new_module = AspectModule(module.__name__)
+        AspectModule.__dict__.update(module.__dict__)
+        return new_module

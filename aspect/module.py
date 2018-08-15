@@ -11,7 +11,7 @@ class AspectModule(ModuleType):
             return obj
 
         # if object already patched by actual advices
-        if obj._advices_hashsum == advices.hashsum:
+        if getattr(obj, '_advices_hashsum', 0) == advices.hashsum:
             return obj
 
         # patch

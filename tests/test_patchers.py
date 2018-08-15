@@ -1,5 +1,5 @@
 import re
-from aspect.patchers import patch_class, patch_function
+from aspect.patchers import patch_class, patch_function, patch_object
 from aspect.advice import Advice
 
 
@@ -31,3 +31,25 @@ def test_patch_function():
     patched = patch_function(check_me, advice)
     result = patched(1, 2)
     assert result == 'lol'
+
+
+def test_patch_object():
+    def check_me(a, b=None):
+            return '{}|{}'.format(a, b)
+
+    def handler1(context):
+        yield
+        context.result += '|3'
+
+    def handler2(context):
+        yield
+        context.result += '|4'
+
+    advice = Advice(handler=handler1)
+    patched = patch_object(check_me, advice)
+
+    advice = Advice(handler=handler2)
+    patched = patch_object(patched, advice)
+
+    result = patched(1, 2)
+    assert result == '1|2|3|4'
