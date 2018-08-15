@@ -22,7 +22,7 @@ def test_naive():
         yield
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     result = instance.check_me(1, 2)
     assert result == '1|2'
@@ -34,7 +34,7 @@ def test_patch_result():
         context.result += '|3'
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     result = instance.check_me(1, 2)
     assert result == '1|2|3'
@@ -46,7 +46,7 @@ def test_patch_input():
         yield
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     result = instance.check_me(1, 2)
     assert result == '4|2'
@@ -60,7 +60,7 @@ def test_catch():
             pass
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     result = instance.check_me(1, 2, 3)
     assert result is None
@@ -71,7 +71,7 @@ def test_uncatch():
         yield
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     with pytest.raises(TypeError):
         instance.check_me(1, 2, 3)
@@ -82,7 +82,7 @@ def test_raise_before():
         raise ZeroDivisionError
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     with pytest.raises(ZeroDivisionError):
         instance.check_me(1, 2)
@@ -94,7 +94,7 @@ def test_raise_after():
         raise ZeroDivisionError
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     with pytest.raises(ZeroDivisionError):
         instance.check_me(1, 2)
@@ -106,7 +106,7 @@ def test_method_check():
         context.result = 13
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched._advice = advice
+    Patched._advices = [advice]
     instance = Patched()
     result = instance.nothing()
     assert result == 42

@@ -12,16 +12,19 @@ class Aspect:
             return method
         if not isinstance(method, Callable):
             return method
-        if name == '_advice':
+        if name == '_advices':
             return method
-        if not self._advice.methods.match(name):
+
+        advices = [advice for advice in self._advices if advice.methods.match(name)]
+        if not advices:
             return method
 
         # prepare and return joinpoint
         joinpoint = JoinPoint(
             aspect=self.__class__.__name__,
+            module=self.__module__,
             method=name,
         )
         joinpoint._method = method
-        joinpoint._advice = self._advice
+        joinpoint._advices = advices
         return joinpoint
