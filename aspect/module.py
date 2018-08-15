@@ -4,7 +4,11 @@ from .advice import advices
 from .patchers import patch_object
 
 
-class AspectModule(ModuleType):
+class _Module(ModuleType):
+    pass
+
+
+class AspectModule(_Module):
     def __getattribute__(self, name):
         obj = super().__getattribute__(name)
         if name[:2] == '__':
@@ -21,3 +25,10 @@ class AspectModule(ModuleType):
         setattr(self, name, obj)
 
         return obj
+
+
+def wrap_module(module):
+    new_module = AspectModule(module.__name__)
+    for name in dir(module):
+        setattr(new_module, name, getattr(module, name))
+    return new_module
