@@ -1,4 +1,5 @@
 import sys
+from collections import Callable
 
 from .aspect import Aspect
 from .joinpoint import JoinPoint
@@ -33,6 +34,14 @@ def patch_function(aspect, advice):
     return joinpoint
 
 
+def patch_object(aspect, advice):
+    if isinstance(aspect, type):
+        return patch_class(aspect, advice)
+    if isinstance(aspect, Callable) and advice.methods.match('__call__'):
+        return patch_function(aspect, advice)
+    return aspect
+
+
 def patch_module(module, advice):
     for object_name in dir(module):
         # check object name
@@ -40,14 +49,7 @@ def patch_module(module, advice):
             continue
 
         source_object = getattr(module, object_name)
-
-        # patch class
-        if isinstance(source_object, type):
-            new_object = patch_class(source_object, advice)
-            setattr(module, object_name, new_object)
-        elif advice.methods.match('__call__'):
-            new_object = patch_function(source_object, advice)
-            setattr(module, object_name, new_object)
+        setattr(module, object_name, patch_object(source_object))
 
 
 def patch_past(advice):

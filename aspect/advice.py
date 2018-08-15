@@ -16,11 +16,14 @@ class Advice:
 
 
 class Advices:
+    hashsum = 0
+
     def __init__(self):
         self.catalog = []
 
     def register(self, advice):
         self.catalog.append(advice)
+        self.hashsum += 1
 
     def __iter__(self):
         return iter(self.catalog)
