@@ -1,13 +1,22 @@
-from types import ModuleType
-
 from .advice import advices
 from .patchers import patch_object
 
 
-class AspectModule(ModuleType):
+class AspectModule:
+    def __init__(self, module):
+        self._wrapped_module = module
+
+    def __getattr__(self, name):
+        return getattr(self._wrapped_module, name)
+
     def __getattribute__(self, name):
-        obj = super().__getattribute__(name)
+        try:
+            obj = super().__getattribute__(name)
+        except AttributeError:
+            obj = getattr(self._wrapped_module, name)
         if name[:2] == '__':
+            return obj
+        if name == '_wrapped_module':
             return obj
 
         # if object already patched by actual advices
@@ -26,11 +35,7 @@ class AspectModule(ModuleType):
 def wrap_module(module):
     if isinstance(module, AspectModule):
         return
-    new_module = AspectModule(module.__name__)
-    for name in dir(module):
-        setattr(new_module, name, getattr(module, name))
-    new_module._wrapped_module = module
-    return new_module
+    return AspectModule(module)
 
 
 def unwrap_module(module):
