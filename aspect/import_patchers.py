@@ -16,6 +16,13 @@ def unpatch_past():
 
 
 def patch_future():
+    if AspectFinder in sys.meta_path:
+        return
+    index = sys.meta_path.index(PathFinder)
+    sys.meta_path[index] = AspectFinder
+
+
+def unpatch_future():
     if AspectFinder not in sys.meta_path:
         return
     index = sys.meta_path.index(AspectFinder)

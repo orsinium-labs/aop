@@ -15,3 +15,21 @@ def test_patch_past():
     patchers.unpatch_past()
     assert not isinstance(sys.modules['textwrap'], AspectModule)
     assert isinstance(sys.modules['textwrap'], ModuleType)
+
+
+def test_patch_future():
+    import textwrap
+    del sys.modules['textwrap']  # drop cache
+
+    assert 'textwrap' not in sys.modules
+    patchers.patch_future()
+    import textwrap
+    assert 'textwrap' in sys.modules
+    assert isinstance(sys.modules['textwrap'], AspectModule)
+    assert isinstance(textwrap, AspectModule)
+
+    patchers.unpatch_future()
+    del sys.modules['textwrap']  # drop cache
+    import textwrap
+    assert not isinstance(sys.modules['textwrap'], AspectModule)
+    assert isinstance(sys.modules['textwrap'], ModuleType)
