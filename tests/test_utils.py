@@ -32,6 +32,14 @@ def test_regexp():
     assert expr.match('aaaa') is False
 
 
+def test_equals():
+    expr = utils.RegExp('bc')
+    assert expr.match('a') is False
+    assert expr.match('abc') is False
+    assert expr.match('bcd') is False
+    assert expr.match('bc') is True
+
+
 def test_match():
     expr = utils.match(regexp=r'a{3}')
     assert expr.match('a') is False
