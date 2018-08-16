@@ -4,11 +4,7 @@ from .advice import advices
 from .patchers import patch_object
 
 
-class _Module(ModuleType):
-    pass
-
-
-class AspectModule(_Module):
+class AspectModule(ModuleType):
     def __getattribute__(self, name):
         obj = super().__getattribute__(name)
         if name[:2] == '__':
