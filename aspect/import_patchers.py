@@ -1,18 +1,15 @@
 import sys
-from .patchers import patch_object
+from _frozen_importlib_external import PathFinder
+
+from .hooks import AspectFinder
+from .module import wrap_module
 
 
-def patch_module(module, advice):
-    for object_name in dir(module):
-        # check object name
-        if advice.targets.match(object_name):
-            continue
-
-        source_object = getattr(module, object_name)
-        setattr(module, object_name, patch_object(source_object))
-
-
-def patch_past(advice):
+def patch_past():
     for module_name, module in sys.modules.items():
-        if advice.modules.match(module_name):
-            patch_module(module, advice)
+        setattr(module, wrap_module(module_name))
+
+
+def patch_future():
+    index = sys.meta_path.index(PathFinder)
+    sys.meta_path[index] = AspectFinder

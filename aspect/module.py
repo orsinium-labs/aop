@@ -31,4 +31,9 @@ def wrap_module(module):
     new_module = AspectModule(module.__name__)
     for name in dir(module):
         setattr(new_module, name, getattr(module, name))
+    new_module._wrapped_module = module
     return new_module
+
+
+def unwrap_module(module):
+    return getattr(module, '_wrapped_module', module)
