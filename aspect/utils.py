@@ -7,7 +7,7 @@ import attr
 class StartsWith:
     pattern = attr.ib()
 
-    def match(self, text):
+    def match(self, text: str) -> bool:
         return text.startswith(self.pattern)
 
 
@@ -15,7 +15,7 @@ class StartsWith:
 class EndsWith:
     pattern = attr.ib()
 
-    def match(self, text):
+    def match(self, text: str) -> bool:
         return text.endswith(self.pattern)
 
 
@@ -23,7 +23,7 @@ class EndsWith:
 class Contains:
     pattern = attr.ib()
 
-    def match(self, text):
+    def match(self, text: str) -> bool:
         return self.pattern in text
 
 
@@ -31,8 +31,16 @@ class Contains:
 class RegExp:
     pattern = attr.ib(converter=re.compile)
 
-    def match(self, text):
+    def match(self, text: str) -> bool:
         return bool(self.pattern.fullmatch(text))
+
+
+@attr.s
+class Equals:
+    pattern = attr.ib()
+
+    def match(self, text: str) -> bool:
+        return self.pattern == text
 
 
 mapping = dict(
@@ -40,6 +48,7 @@ mapping = dict(
     startswith=StartsWith,
     endswith=EndsWith,
     contains=Contains,
+    equals=Equals,
 )
 
 
