@@ -27,8 +27,16 @@ class Contains:
         return self.pattern in text
 
 
+@attr.s
+class RegExp:
+    pattern = attr.ib(converter=re.compile)
+
+    def match(self, text):
+        return bool(self.pattern.fullmatch(text))
+
+
 mapping = dict(
-    regexp=re.compile,
+    regexp=RegExp,
     startswith=StartsWith,
     endswith=EndsWith,
     contains=Contains,
@@ -36,5 +44,5 @@ mapping = dict(
 
 
 def match(**kwargs):
-    name, pattern = kwargs.pop()
+    name, pattern = next(iter(kwargs.items()))
     return mapping[name](pattern)
