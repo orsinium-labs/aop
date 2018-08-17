@@ -3,7 +3,7 @@ from advice.patchers import patch_class, patch_function, patch_object
 from advice.advice import Advice
 
 
-def test_patch_class():
+def test_patch_class(register_advice):
     class Source:
         def check_me(self, a, b=None):
             return '{}|{}'.format(a, b)
@@ -13,13 +13,14 @@ def test_patch_class():
         context.result = 'lol'
 
     advice = Advice(methods=re.compile('check_me'), handler=handler)
-    Patched = patch_class(Source, advice)
+    register_advice(advice)
+    Patched = patch_class(Source)
     instance = Patched()
     result = instance.check_me(1, 2)
     assert result == 'lol'
 
 
-def test_patch_function():
+def test_patch_function(register_advice):
     def check_me(a, b=None):
             return '{}|{}'.format(a, b)
 
@@ -28,12 +29,13 @@ def test_patch_function():
         context.result = 'lol'
 
     advice = Advice(handler=handler)
-    patched = patch_function(check_me, advice)
+    register_advice(advice)
+    patched = patch_function(check_me)
     result = patched(1, 2)
     assert result == 'lol'
 
 
-def test_patch_object():
+def test_patch_object(register_advice):
     def check_me(a, b=None):
             return '{}|{}'.format(a, b)
 
@@ -46,10 +48,12 @@ def test_patch_object():
         context.result += '|4'
 
     advice = Advice(handler=handler1)
-    patched = patch_object(check_me, advice)
+    register_advice(advice)
+    patched = patch_object(check_me)
 
     advice = Advice(handler=handler2)
-    patched = patch_object(patched, advice)
+    patched = patch_object(patched)
+    register_advice(advice)
 
     result = patched(1, 2)
     assert result == '1|2|3|4'
