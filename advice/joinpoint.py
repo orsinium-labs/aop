@@ -17,15 +17,23 @@ class JoinPoint:
     result = attr.ib(default=None)
 
     _method = None
+    _advices = None
+    _advices_hashsum = None
 
     @property
     def advices(self):
+        if self._advices_hashsum == all_advices.hashsum:
+            return self._advices
+
         advices = []
         for advice in all_advices:
             if advice.modules.match(self.module):
                 if advice.methods.match(self.method):
                     if advice.targets.match(self.aspect):
                         advices.append(advice)
+
+        self._advices = advices
+        self._advices_hashsum = all_advices.hashsum
         return advices
 
     def __call__(self, *args, **kwargs):
