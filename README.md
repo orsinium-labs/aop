@@ -2,6 +2,11 @@
 
 [Aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
 
+## TODO
+
+1. FIX starred import
+1. Patch already imported objects (`patch_project`)
+
 ## Usage
 
 ```python
