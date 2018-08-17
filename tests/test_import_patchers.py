@@ -1,8 +1,8 @@
 import sys
 from types import ModuleType
 
-from aspect import import_patchers as patchers
-from aspect.module import AspectModule
+from advice import import_patchers as patchers
+from advice.module import AspectModule
 
 
 def test_patch_past():

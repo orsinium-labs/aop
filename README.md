@@ -5,7 +5,7 @@
 ## Usage
 
 ```python
-import aspect
+import advice
 
 
 def multiply(context):
@@ -15,10 +15,10 @@ def multiply(context):
     context.result *= 100
 
 
-aspect.register(
+advice.register(
     handler=multiply,
-    modules=aspect.match(equals='math'),
-    targets=aspect.match(regexp='(sin|cos)')
+    modules=advice.match(equals='math'),
+    targets=advice.match(regexp='(sin|cos)')
 )
 ```
 

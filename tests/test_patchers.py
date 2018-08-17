@@ -1,6 +1,6 @@
 import re
-from aspect.patchers import patch_class, patch_function, patch_object
-from aspect.advice import Advice
+from advice.patchers import patch_class, patch_function, patch_object
+from advice.advice import Advice
 
 
 def test_patch_class():
