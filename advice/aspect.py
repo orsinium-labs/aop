@@ -15,10 +15,6 @@ class Aspect:
         if name == '_advices':
             return method
 
-        advices = [advice for advice in self._advices if advice.methods.match(name)]
-        if not advices:
-            return method
-
         # prepare and return joinpoint
         joinpoint = JoinPoint(
             aspect=self.__class__.__name__,
@@ -26,5 +22,4 @@ class Aspect:
             method=name,
         )
         joinpoint._method = method
-        joinpoint._advices = advices
         return joinpoint

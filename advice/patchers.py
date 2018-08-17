@@ -4,49 +4,33 @@ from .aspect import Aspect
 from .joinpoint import JoinPoint
 
 
-def patch_class(aspect, advice):
+def patch_class(aspect):
     # make new object name
     name = aspect.__name__
     if not name.endswith('Aspect'):
         name += 'Aspect'
-
     # patch
-    return type(
-        name,
-        (Aspect, aspect),
-        dict(
-            _advices=[advice],
-            _advices_hashsum=1,
-        ),
-    )
+    return type(name, (Aspect, aspect), {})
 
 
-def patch_function(aspect, advice):
+def patch_function(aspect):
     joinpoint = JoinPoint(
         aspect=aspect.__name__,
         method='__call__',
         module=aspect.__module__,
     )
     joinpoint._method = aspect
-    joinpoint._advices = [advice]
-    joinpoint._advices_hashsum = 1
     return joinpoint
 
 
-def patch_object(aspect, advice):
-    # add advice to patched aspect
-    if hasattr(aspect, '_advices'):
-        if advice not in aspect._advices:
-            aspect._advices.append(advice)
-            aspect._advices_hashsum += 1
+def patch_object(aspect):
+    # don't patch object twice
+    if isinstance(aspect, (Aspect, JoinPoint)):
         return aspect
-
     # class
     if isinstance(aspect, type):
-        return patch_class(aspect, advice)
-
+        return patch_class(aspect)
     # function
-    if isinstance(aspect, Callable) and advice.methods.match('__call__'):
-        return patch_function(aspect, advice)
-
+    if isinstance(aspect, Callable):
+        return patch_function(aspect)
     return aspect

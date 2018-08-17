@@ -2,6 +2,8 @@ from contextlib import suppress
 
 import attr
 
+from .advice import advices as all_advices
+
 
 @attr.s
 class JoinPoint:
@@ -15,12 +17,21 @@ class JoinPoint:
     result = attr.ib(default=None)
 
     _method = None
-    _advices = None
+
+    @property
+    def advices(self):
+        advices = []
+        for advice in all_advices:
+            if advice.modules.match(self.module):
+                if advice.methods.match(self.method):
+                    if advice.targets.match(self.aspect):
+                        advices.append(advice)
+        return advices
 
     def __call__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        advices = [advice.handler(self) for advice in self._advices]
+        advices = [advice.handler(self) for advice in self.advices]
 
         # joinpoint before aspect call
         [next(advice) for advice in advices]

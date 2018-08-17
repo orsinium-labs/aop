@@ -28,5 +28,8 @@ class Advices:
     def __iter__(self):
         return iter(self.catalog)
 
+    def __contains__(self, advice):
+        return advice in self.catalog
+
 
 advices = Advices()

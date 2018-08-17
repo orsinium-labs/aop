@@ -1,4 +1,3 @@
-from .advice import advices
 from .patchers import patch_object
 
 
@@ -19,14 +18,8 @@ class AspectModule:
         if name == '_wrapped_module':
             return obj
 
-        # if object already patched by actual advices
-        if getattr(obj, '_advices_hashsum', 0) == advices.hashsum:
-            return obj
-
         # patch
-        for advice in advices:
-            if advice.modules.match(self.__name__):
-                obj = patch_object(obj, advice)
+        obj = patch_object(obj)
         setattr(self, name, obj)
 
         return obj
