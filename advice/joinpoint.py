@@ -20,6 +20,9 @@ class JoinPoint:
     _advices = None
     _advices_hashsum = None
 
+    def __hash__(self):
+        return hash(self._method)
+
     @property
     def advices(self):
         if self._advices_hashsum == all_advices.hashsum:
