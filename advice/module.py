@@ -20,6 +20,13 @@ class AspectModule:
     def __getattr__(self, name):
         return getattr(self._wrapped_module, name)
 
+    def __dir__(self):
+        return dir(self._wrapped_module)
+
+    @property
+    def __all__(self):
+        return dir(self._wrapped_module)
+
     def __getattribute__(self, name):
         try:
             obj = super().__getattribute__(name)
