@@ -12,6 +12,8 @@ class Aspect:
             return method
         if not isinstance(method, Callable):
             return method
+        if isinstance(method, JoinPoint):
+            return method
 
         # prepare and return joinpoint
         joinpoint = JoinPoint(
@@ -20,4 +22,5 @@ class Aspect:
             method=name,
         )
         joinpoint._method = method
+        setattr(self, name, joinpoint)  # save joinpoint
         return joinpoint
