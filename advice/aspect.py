@@ -12,8 +12,6 @@ class Aspect:
             return method
         if not isinstance(method, Callable):
             return method
-        if name == '_advices':
-            return method
 
         # prepare and return joinpoint
         joinpoint = JoinPoint(
