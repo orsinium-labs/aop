@@ -1,4 +1,5 @@
 from collections import Callable
+from contextlib import suppress
 
 from .aspect import Aspect
 from .joinpoint import JoinPoint
@@ -10,14 +11,17 @@ def patch_class(aspect):
     if not name.endswith('Aspect'):
         name += 'Aspect'
     # patch
-    return type(name, (Aspect, aspect), {})
+    # TypeError: type '_bz2.BZ2Compressor' is not an acceptable base type
+    with suppress(TypeError):
+        aspect = type(name, (Aspect, aspect), {})
+    return aspect
 
 
 def patch_function(aspect):
     joinpoint = JoinPoint(
         aspect=aspect.__name__,
         method='__call__',
-        module=aspect.__module__,
+        module=getattr(aspect, '__module__', ''),
     )
     joinpoint._method = aspect
     return joinpoint

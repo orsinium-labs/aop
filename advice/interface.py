@@ -1,6 +1,6 @@
 from .advice import advices, Advice
 from .state import state
-from .import_patchers import patch_import, patch_cache, unpatch_import, unpatch_cache
+from .import_patchers import patch_import, patch_cache, unpatch_import, unpatch_cache, patch_project
 
 
 def enable():
@@ -9,6 +9,7 @@ def enable():
     state.active = True
     patch_import()
     patch_cache()
+    patch_project()
 
 
 def disable():
