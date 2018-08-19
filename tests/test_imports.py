@@ -14,6 +14,7 @@ def clean():
     if 'textwrap' in sys.modules:
         del sys.modules['textwrap']
     patchers.unpatch_import()
+    patchers.unpatch_cache()
 
 
 def handler(context):
@@ -53,7 +54,7 @@ def test_before(register_advice, clean):
     #assert textwrap.fill('test') == 'lol'
 
 
-def test_starred_before(register_advice, clean):
+def test_from_before(register_advice, clean):
     register_advice(advice)
     patchers.patch_import()
     from textwrap import fill
@@ -62,10 +63,23 @@ def test_starred_before(register_advice, clean):
     assert fill('test') == 'lol'
 
 
-#def test_starred_after(register_advice, clean):
+#def test_from_after(register_advice, clean):
     #from textwrap import fill
     #register_advice(advice)
     #patchers.patch_import()
 
     #assert isinstance(fill, JoinPoint)
     #assert fill('test') == 'lol'
+
+
+
+def test_cached_before(register_advice, clean):
+    import textwrap
+    del textwrap
+
+    register_advice(advice)
+    patchers.patch_cache()
+    from textwrap import fill
+
+    assert isinstance(fill, JoinPoint)
+    assert fill('test') == 'lol'
