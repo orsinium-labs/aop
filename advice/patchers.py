@@ -1,5 +1,6 @@
 from collections import Callable
 from contextlib import suppress
+from functools import update_wrapper
 
 from .aspect import Aspect
 from .joinpoint import JoinPoint
@@ -28,7 +29,7 @@ def patch_function(aspect):
         module=method,
     )
     joinpoint._method = aspect
-    return joinpoint
+    return update_wrapper(joinpoint, aspect)
 
 
 def patch_object(aspect):
