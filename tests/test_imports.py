@@ -37,9 +37,6 @@ def test_before(register_advice, clean):
     patchers.patch_import()
     import textwrap
     assert isinstance(textwrap, AspectModule)
-    # assert isinstance(textwrap.fill, JoinPoint)
+    assert isinstance(textwrap.fill, JoinPoint)
 
-    # assert textwrap.fill._method.__module__ == textwrap.fill.module
-    # assert textwrap.fill._method.__module__ == 'textwrap'
-
-    # assert textwrap.fill('test') == 'lol'
+    assert textwrap.fill('test') == 'lol'

@@ -17,9 +17,6 @@ class AspectModule:
         # for name in dir(module):
         #     setattr(self, name, MethodGetter(module, name))
 
-    def __getattr__(self, name):
-        return getattr(self._wrapped_module, name)
-
     def __dir__(self):
         return dir(self._wrapped_module)
 
