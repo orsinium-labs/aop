@@ -20,6 +20,9 @@ class JoinPoint:
     _advices = None
     _advices_hashsum = None
 
+    def __getattr__(self, name):
+        return getattr(self._method, name)
+
     def __hash__(self):
         return hash(self._method)
 

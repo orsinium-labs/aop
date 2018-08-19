@@ -13,6 +13,7 @@ from advice import import_patchers as patchers
 def clean():
     if 'textwrap' in sys.modules:
         del sys.modules['textwrap']
+    patchers.unpatch_import()
 
 
 def handler(context):
@@ -36,7 +37,35 @@ def test_before(register_advice, clean):
     register_advice(advice)
     patchers.patch_import()
     import textwrap
+
     assert isinstance(textwrap, AspectModule)
     assert isinstance(textwrap.fill, JoinPoint)
-
     assert textwrap.fill('test') == 'lol'
+
+
+#def test_after(register_advice, clean):
+    #import textwrap
+    #register_advice(advice)
+    #patchers.patch_import()
+
+    #assert isinstance(textwrap, AspectModule)
+    #assert isinstance(textwrap.fill, JoinPoint)
+    #assert textwrap.fill('test') == 'lol'
+
+
+def test_starred_before(register_advice, clean):
+    register_advice(advice)
+    patchers.patch_import()
+    from textwrap import fill
+
+    assert isinstance(fill, JoinPoint)
+    assert fill('test') == 'lol'
+
+
+#def test_starred_after(register_advice, clean):
+    #from textwrap import fill
+    #register_advice(advice)
+    #patchers.patch_import()
+
+    #assert isinstance(fill, JoinPoint)
+    #assert fill('test') == 'lol'
