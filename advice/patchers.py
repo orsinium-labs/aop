@@ -18,10 +18,14 @@ def patch_class(aspect):
 
 
 def patch_function(aspect):
+    method = getattr(aspect, '__module__', '')
+    if not method:
+        method = aspect.__gloabals__['__spec__'].name
+
     joinpoint = JoinPoint(
         aspect=aspect.__name__,
         method='__call__',
-        module=getattr(aspect, '__module__', ''),
+        module=method,
     )
     joinpoint._method = aspect
     return joinpoint

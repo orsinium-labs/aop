@@ -5,7 +5,7 @@ import attr
 from .advice import advices as all_advices
 
 
-@attr.s
+@attr.s(hash=False)
 class JoinPoint:
     aspect = attr.ib()
     method = attr.ib()
