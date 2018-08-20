@@ -1,4 +1,4 @@
 from .interface import enable, disable, register
-from .utils import match
+from .matcher import match
 
 __all__ = ['enable', 'disable', 'register', 'match']
