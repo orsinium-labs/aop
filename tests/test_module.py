@@ -1,7 +1,9 @@
+# built-in
 import re
 import textwrap
 
-from aop.advice import advices, Advice
+# project
+from aop.advice import Advice, advices
 from aop.module import wrap_module
 
 

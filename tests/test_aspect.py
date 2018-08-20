@@ -1,6 +1,10 @@
+# built-in
 import re
 
+# external
 import pytest
+
+# project
 from aop.advice import Advice
 from aop.aspect import Aspect
 

@@ -1,7 +1,9 @@
+# built-in
 from collections import Callable
 from contextlib import suppress
 from functools import update_wrapper
 
+# project
 from .aspect import Aspect
 from .joinpoint import JoinPoint
 

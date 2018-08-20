@@ -1,7 +1,10 @@
+# built-in
 from contextlib import suppress
 
+# external
 import attr
 
+# project
 from .advice import advices as all_advices
 
 

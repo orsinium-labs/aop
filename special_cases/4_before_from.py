@@ -1,7 +1,10 @@
 # import from module, patch before import
 
-import aop  # noQA
+# built-in
 from math import cos, isclose
+
+# project
+import aop  # noQA
 
 
 result = cos(0)

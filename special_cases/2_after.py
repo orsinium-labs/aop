@@ -1,6 +1,9 @@
 # apply aop after module import
 
+# built-in
 import math
+
+# project
 import aop  # noQA
 
 

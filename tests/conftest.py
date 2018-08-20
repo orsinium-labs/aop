@@ -1,5 +1,8 @@
-from aop.advice import advices
+# external
 import pytest
+
+# project
+from aop.advice import advices
 
 
 @pytest.fixture()

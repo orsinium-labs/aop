@@ -2,10 +2,15 @@
 # 2. import
 # apply aop
 
+# built-in
+from math import cos, isclose  # noQA
+
+# project
 import advice
-advice.enable()
-from math import isclose, cos  # noQA
 import aop  # noQA
+
+
+advice.enable()
 
 
 result = cos(0)

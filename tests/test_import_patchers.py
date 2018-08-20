@@ -1,6 +1,8 @@
+# built-in
 import sys
 from types import ModuleType
 
+# project
 from aop import import_patchers as patchers
 from aop.module import AspectModule
 

@@ -1,9 +1,13 @@
 # apply aop after module caching
 
-import math
-del math
-import aop  # noQA
+# built-in
 import math  # noQA
+
+# project
+import aop  # noQA
+
+
+del math
 
 
 result = math.cos(0)

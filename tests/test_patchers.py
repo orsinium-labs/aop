@@ -1,6 +1,9 @@
+# built-in
 import re
-from aop.patchers import patch_class, patch_function, patch_object
+
+# project
 from aop.advice import Advice
+from aop.patchers import patch_class, patch_function, patch_object
 
 
 def test_patch_class(register_advice):

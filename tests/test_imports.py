@@ -1,12 +1,15 @@
+# built-in
 import re
 import sys
 
+# external
 import pytest
 
-from aop.advice import Advice
-from aop.module import AspectModule
-from aop.joinpoint import JoinPoint
+# project
 from aop import import_patchers as patchers
+from aop.advice import Advice
+from aop.joinpoint import JoinPoint
+from aop.module import AspectModule
 
 
 @pytest.fixture()

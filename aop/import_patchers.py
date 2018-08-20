@@ -1,10 +1,12 @@
+# built-in
 import sys
 from os import getcwd
 from types import ModuleType
 from _frozen_importlib_external import PathFinder
 
+# project
 from .hooks import AspectFinder
-from .module import wrap_module, unwrap_module, AspectModule
+from .module import AspectModule, unwrap_module, wrap_module
 from .patchers import patch_object
 
 
