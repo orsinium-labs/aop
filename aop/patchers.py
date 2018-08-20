@@ -21,14 +21,14 @@ def patch_class(aspect):
 
 
 def patch_function(aspect):
-    method = getattr(aspect, '__module__', '')
-    if not method:
-        method = aspect.__module__ = aspect.__globals__['__spec__'].name
+    module = getattr(aspect, '__module__', '')
+    if not module:
+        module = aspect.__module__ = getattr(aspect.__globals__['__spec__'], 'name', '')
 
     joinpoint = JoinPoint(
         aspect=aspect.__name__,
         method='__call__',
-        module=method,
+        module=module,
     )
     joinpoint._method = aspect
     return update_wrapper(joinpoint, aspect)
