@@ -10,6 +10,9 @@ from .module import AspectModule, unwrap_module, wrap_module
 from .patchers import patch_object
 
 
+CWD = getcwd()
+
+
 def patch_cache():
     """Patch modules in cache
     """
@@ -38,10 +41,10 @@ def unpatch_import():
     sys.meta_path[index] = PathFinder
 
 
-def patch_project(path=getcwd()):
+def patch_project(path=CWD):
     """Patch already imported modules in project modules
     """
-    for module_name, module in sys.modules.copy().items():
+    for module in sys.modules.copy().values():
         if not getattr(module.__spec__, 'origin', None):
             continue
         if module.__spec__.origin.startswith(path):
