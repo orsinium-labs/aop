@@ -23,8 +23,7 @@ import aop
 
 
 def multiply(context):
-    print(context.args)
-    print(context.kwargs)
+    print(context.aspect, context.args, context.kwargs)
     yield
     context.result *= 100
 
@@ -39,10 +38,8 @@ aop.register(
 Ok, let's check:
 
 ```python
-In [2]: import math
-
-In [3]: math.cos(0)
-(0,)
-{}
-Out[3]: 100.0
+import math
+math.cos(0)
+# prints: cos (0,) {}
+# returns: 100.0
 ```
