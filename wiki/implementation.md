@@ -49,3 +49,14 @@ This is some troubles that I got when implemented this library.
 
 * Issue: creating class instances before class MRO patching broke `isinstance` checks.
 * Examples: [traitlets](https://github.com/ipython/traitlets/blob/4.3.2/traitlets/config/configurable.py#L421) (used into IPython)
+
+---
+
+* Issue: some libs adds some functions in sets.
+* Solution: implement `__hash__` for joinpoint.
+
+---
+
+* Issue: some functions and methodscan contains attributes.
+* Examples: `csrf_exempt` from Django set up attribute to view function.
+* Solution: propagate attributes getting from joinpoint to wrapped object.
