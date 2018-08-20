@@ -44,14 +44,14 @@ def test_before(register_advice, clean):
     assert textwrap.fill('test') == 'lol'
 
 
-#def test_after(register_advice, clean):
-    #import textwrap
-    #register_advice(advice)
-    #patchers.patch_import()
-
-    #assert isinstance(textwrap, AspectModule)
-    #assert isinstance(textwrap.fill, JoinPoint)
-    #assert textwrap.fill('test') == 'lol'
+# def test_after(register_advice, clean):
+#     import textwrap
+#     register_advice(advice)
+#     patchers.patch_import()
+#
+#     assert isinstance(textwrap, AspectModule)
+#     assert isinstance(textwrap.fill, JoinPoint)
+#     assert textwrap.fill('test') == 'lol'
 
 
 def test_from_before(register_advice, clean):
@@ -63,14 +63,13 @@ def test_from_before(register_advice, clean):
     assert fill('test') == 'lol'
 
 
-#def test_from_after(register_advice, clean):
-    #from textwrap import fill
-    #register_advice(advice)
-    #patchers.patch_import()
-
-    #assert isinstance(fill, JoinPoint)
-    #assert fill('test') == 'lol'
-
+# def test_from_after(register_advice, clean):
+#     from textwrap import fill
+#     register_advice(advice)
+#     patchers.patch_import()
+#
+#     assert isinstance(fill, JoinPoint)
+#     assert fill('test') == 'lol'
 
 
 def test_cached_before(register_advice, clean):

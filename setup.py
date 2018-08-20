@@ -22,6 +22,7 @@ setup(
     ),
 
     packages=['advice'],
+    requires=['attrs'],
     # entry_points={
     #     'console_scripts': [
     #         'sample=sample:main',
