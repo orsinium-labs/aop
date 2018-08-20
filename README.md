@@ -1,11 +1,20 @@
-# Advice
+# AOP
 
 [Aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
 
-## TODO
+Features:
 
-1. FIX starred import
-1. Patch already imported objects (`patch_project`)
+1. Patch any module: your project, stdlib, built-ins.
+1. Patch any object: functions, class instances.
+1. Pure Python implementation: run it on CPython or PyPy.
+
+TODO:
+
+1. Patch already imported objects
+1. Patch `__init__` and `__new__`.
+1. Test PyPy
+1. Test cases via tox
+
 
 ## Usage
 
