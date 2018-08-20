@@ -1,22 +1,22 @@
-from aop import utils
+from aop import matcher
 
 
 def test_startswith():
-    expr = utils.StartsWith('abc')
+    expr = matcher.StartsWith('abc')
     assert expr.match('abcdef') is True
     assert expr.match('abef') is False
     assert expr.match('dabc') is False
 
 
 def test_endswith():
-    expr = utils.EndsWith('def')
+    expr = matcher.EndsWith('def')
     assert expr.match('abcdef') is True
     assert expr.match('abef') is False
     assert expr.match('defa') is False
 
 
 def test_contains():
-    expr = utils.Contains('def')
+    expr = matcher.Contains('def')
     assert expr.match('abcdef') is True
     assert expr.match('defabc') is True
     assert expr.match('adefbc') is True
@@ -25,7 +25,7 @@ def test_contains():
 
 
 def test_regexp():
-    expr = utils.RegExp(r'a{3}')
+    expr = matcher.RegExp(r'a{3}')
     assert expr.match('a') is False
     assert expr.match('aa') is False
     assert expr.match('aaa') is True
@@ -33,7 +33,7 @@ def test_regexp():
 
 
 def test_equals():
-    expr = utils.RegExp('bc')
+    expr = matcher.RegExp('bc')
     assert expr.match('a') is False
     assert expr.match('abc') is False
     assert expr.match('bcd') is False
@@ -41,17 +41,17 @@ def test_equals():
 
 
 def test_match():
-    expr = utils.match(regexp=r'a{3}')
+    expr = matcher.match(regexp=r'a{3}')
     assert expr.match('a') is False
     assert expr.match('aa') is False
     assert expr.match('aaa') is True
     assert expr.match('aaaa') is False
 
-    expr = utils.match(startswith='a')
-    assert isinstance(expr, utils.StartsWith)
+    expr = matcher.match(startswith='a')
+    assert isinstance(expr, matcher.StartsWith)
 
-    expr = utils.match(endswith='a')
-    assert isinstance(expr, utils.EndsWith)
+    expr = matcher.match(endswith='a')
+    assert isinstance(expr, matcher.EndsWith)
 
-    expr = utils.match(contains='a')
-    assert isinstance(expr, utils.Contains)
+    expr = matcher.match(contains='a')
+    assert isinstance(expr, matcher.Contains)
