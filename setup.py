@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='advice',
+    name='aop',
     version='0.1.0',
     description='Aspect-oriented programming',
     long_description=long_description,
@@ -17,11 +17,11 @@ setup(
     author='@orsinium',
     author_email='master_fess@mail.ru',
     keywords=(
-        'aspect oriented programming advice joinpoint '
+        'aop aspect oriented programming advice joinpoint '
         'patching import decorators logging testing extension'
     ),
 
-    packages=['advice'],
+    packages=['aop'],
     requires=['attrs'],
     # entry_points={
     #     'console_scripts': [

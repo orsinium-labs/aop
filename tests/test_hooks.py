@@ -1,5 +1,5 @@
-from advice.hooks import AspectFinder, AspectLoader
-from advice.module import AspectModule
+from aop.hooks import AspectFinder, AspectLoader
+from aop.module import AspectModule
 
 
 def test_finder_and_loader():

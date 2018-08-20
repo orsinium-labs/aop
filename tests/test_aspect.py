@@ -1,8 +1,8 @@
 import re
 
 import pytest
-from advice.advice import Advice
-from advice.aspect import Aspect
+from aop.advice import Advice
+from aop.aspect import Aspect
 
 
 class Source:

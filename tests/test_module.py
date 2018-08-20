@@ -1,8 +1,8 @@
 import re
 import textwrap
 
-from advice.advice import advices, Advice
-from advice.module import wrap_module
+from aop.advice import advices, Advice
+from aop.module import wrap_module
 
 
 def handler1(context):

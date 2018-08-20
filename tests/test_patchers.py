@@ -1,6 +1,6 @@
 import re
-from advice.patchers import patch_class, patch_function, patch_object
-from advice.advice import Advice
+from aop.patchers import patch_class, patch_function, patch_object
+from aop.advice import Advice
 
 
 def test_patch_class(register_advice):

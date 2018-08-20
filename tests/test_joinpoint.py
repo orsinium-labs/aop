@@ -1,4 +1,4 @@
-from advice.patchers import patch_function
+from aop.patchers import patch_function
 
 
 def test_hashable():

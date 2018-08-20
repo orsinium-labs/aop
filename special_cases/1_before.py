@@ -1,6 +1,6 @@
-# apply advices before module import
+# apply aop before module import
 
-import advices  # noQA
+import aop  # noQA
 import math
 
 

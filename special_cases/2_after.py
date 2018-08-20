@@ -1,7 +1,7 @@
-# apply advices after module import
+# apply aop after module import
 
 import math
-import advices  # noQA
+import aop  # noQA
 
 
 result = math.cos(0)

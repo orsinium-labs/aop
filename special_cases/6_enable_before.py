@@ -1,11 +1,11 @@
 # 1. enable
 # 2. import
-# apply advices
+# apply aop
 
 import advice
 advice.enable()
 import math  # noQA
-import advices  # noQA
+import aop  # noQA
 
 
 result = math.cos(0)

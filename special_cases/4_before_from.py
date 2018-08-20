@@ -1,6 +1,6 @@
 # import from module, patch before import
 
-import advices  # noQA
+import aop  # noQA
 from math import cos, isclose
 
 

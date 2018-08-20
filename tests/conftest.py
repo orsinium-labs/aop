@@ -1,4 +1,4 @@
-from advice.advice import advices
+from aop.advice import advices
 import pytest
 
 

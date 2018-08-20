@@ -1,8 +1,8 @@
-# apply advices after module caching
+# apply aop after module caching
 
 import math
 del math
-import advices  # noQA
+import aop  # noQA
 import math  # noQA
 
 

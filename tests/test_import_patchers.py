@@ -1,8 +1,8 @@
 import sys
 from types import ModuleType
 
-from advice import import_patchers as patchers
-from advice.module import AspectModule
+from aop import import_patchers as patchers
+from aop.module import AspectModule
 
 
 def test_patch_cache():

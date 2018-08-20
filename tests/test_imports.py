@@ -3,10 +3,10 @@ import sys
 
 import pytest
 
-from advice.advice import Advice
-from advice.module import AspectModule
-from advice.joinpoint import JoinPoint
-from advice import import_patchers as patchers
+from aop.advice import Advice
+from aop.module import AspectModule
+from aop.joinpoint import JoinPoint
+from aop import import_patchers as patchers
 
 
 @pytest.fixture()
