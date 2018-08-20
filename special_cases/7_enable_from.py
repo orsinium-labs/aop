@@ -3,14 +3,11 @@
 # apply aop
 
 # built-in
+import aop
+aop.enable()
+
 from math import cos, isclose  # noQA
-
-# project
-import advice
-import aop  # noQA
-
-
-advice.enable()
+import advices  # noQA
 
 
 result = cos(0)

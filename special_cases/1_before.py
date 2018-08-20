@@ -1,10 +1,7 @@
 # apply aop before module import
 
-# built-in
+import advices  # noQA
 import math
-
-# project
-import aop  # noQA
 
 
 result = math.cos(0)

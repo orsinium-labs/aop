@@ -2,15 +2,11 @@
 # 2. import
 # apply aop
 
-# built-in
+import aop
+aop.enable()
+
 import math  # noQA
-
-# project
-import advice
-import aop  # noQA
-
-
-advice.enable()
+import advices  # noQA
 
 
 result = math.cos(0)

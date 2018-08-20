@@ -1,5 +1,5 @@
 # project
-import advice
+import aop
 
 
 def multiply(context):
@@ -8,8 +8,8 @@ def multiply(context):
     context.result *= 100
 
 
-advice.register(
+aop.register(
     handler=multiply,
-    modules=advice.match(equals='math'),
-    targets=advice.match(regexp='(sin|cos)')
+    modules=aop.match(equals='math'),
+    targets=aop.match(regexp='(sin|cos)')
 )
