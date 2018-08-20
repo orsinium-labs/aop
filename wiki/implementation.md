@@ -13,9 +13,13 @@ This is some troubles that I got when implemented this library.
     if not getattr(module.__spec__, 'origin', None): continue
     ```
 
+---
+
 * Issue: some modules from stdlib uses starred import
 * Examples: [lzma](https://github.com/python/cpython/blob/master/Lib/lzma.py), [locale](https://github.com/python/cpython/blob/master/Lib/locale.py)
 * Solution: implement `__dir__` methodfor module objects.
+
+---
 
 * Issue: `__spec__` can be None
 * Examples: see [import system documentation](https://docs.python.org/3/reference/import.html#main-spec)
@@ -24,9 +28,13 @@ This is some troubles that I got when implemented this library.
     module = getattr(aspect, '__module__', '')
     ```
 
+---
+
 * Issue: some modules or objects can be lazy imported
 * Examples: [importlib.util.LazyLoader](https://docs.python.org/3/library/importlib.html#importlib.util.LazyLoader)provide this functionality.
 * Solution: patch module object and wrap objects on access.
+
+---
 
 * Issue: some objects forbid inherited classes creation.
 * Examples: `_bz2.BZ2Compressor`
@@ -36,6 +44,8 @@ This is some troubles that I got when implemented this library.
     with suppress(TypeError):
         ...  # patch
     ```
+
+---
 
 * Issue: when we create class instances before class MRO patching, we broke `isinstance` checks.
 * Examples: [traitlets](https://github.com/ipython/traitlets/blob/4.3.2/traitlets/config/configurable.py#L421) (used into IPython)
