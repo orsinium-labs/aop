@@ -4,8 +4,8 @@ from . import import_patchers as patchers
 from .state import state
 
 
-def enable():
-    if state.active:
+def enable(*, force=False):
+    if not force and state.active:
         return
     state.active = True
     patchers.patch_import()
@@ -22,5 +22,15 @@ def disable():
 
 
 def register(handler, **kwargs):
+    if state.started:
+        raise Exception("Please, don't register advices after aop.start()")
     enable()
     advices.register(Advice(handler=handler, **kwargs))
+
+
+def start(force=False):
+    if not force and state.started:
+        raise Exception("Please, don't start AOP twice.")
+    state.started = True
+    disable()
+    enable()

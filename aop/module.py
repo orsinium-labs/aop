@@ -1,5 +1,7 @@
 # project
 from .patchers import patch_object
+from .state import state
+from .advice import advices
 
 
 class AspectModule:
@@ -31,8 +33,18 @@ class AspectModule:
 
 
 def wrap_module(module):
+    # don't patch twice
     if isinstance(module, AspectModule):
-        return
+        return module
+
+    # if started, don't patch modules that not match any known advice
+    if state.started:
+        for advice in advices:
+            if advice.modules.match(module.__name__):
+                break
+        else:
+            return module
+
     return AspectModule(module)
 
 
