@@ -32,5 +32,5 @@ def start(force=False):
     if not force and state.started:
         raise Exception("Please, don't start AOP twice.")
     state.started = True
-    disable()
-    enable()
+    patchers.unpatch_cache()
+    patchers.patch_cache()
