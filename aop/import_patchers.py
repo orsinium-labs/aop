@@ -44,16 +44,13 @@ def unpatch_import():
 def patch_project(path=CWD):
     """Patch already imported modules in project modules
     """
-    for module in sys.modules.copy().values():
-        if not getattr(module.__spec__, 'origin', None):
+    module = sys.modules['__main__']
+    for obj_name in dir(module):
+        if obj_name[:2] == '__':
             continue
-        if module.__spec__.origin.startswith(path):
-            for obj_name in dir(module):
-                if obj_name[:2] == '__':
-                    continue
-                obj = getattr(module, obj_name)
-                if isinstance(obj, ModuleType):
-                    if not isinstance(obj, AspectModule):
-                        setattr(module, obj_name, wrap_module(obj))
-                else:
-                    setattr(module, obj_name, patch_object(obj))
+        obj = getattr(module, obj_name)
+        if isinstance(obj, ModuleType):
+            if not isinstance(obj, AspectModule):
+                setattr(module, obj_name, wrap_module(obj))
+        else:
+            setattr(module, obj_name, patch_object(obj))

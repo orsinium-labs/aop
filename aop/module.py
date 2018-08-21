@@ -2,21 +2,9 @@
 from .patchers import patch_object
 
 
-class MethodGetter:
-    def __init__(self, module, name):
-        self.module = module
-        self.name = name
-
-    def __get__(self, **args):
-        obj = getattr(self.module, self.name)
-        return patch_object(obj)
-
-
 class AspectModule:
     def __init__(self, module):
         self._wrapped_module = module
-        # for name in dir(module):
-        #     setattr(self, name, MethodGetter(module, name))
 
     def __dir__(self):
         return dir(self._wrapped_module)

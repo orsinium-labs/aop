@@ -10,7 +10,7 @@ def enable():
     state.active = True
     patchers.patch_import()
     patchers.patch_cache()
-    # patchers.patch_project()
+    patchers.patch_project()
 
 
 def disable():

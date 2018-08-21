@@ -13,7 +13,6 @@ TODO:
 1. Patch already imported objects
 1. Patch `__init__` and `__new__`.
 1. Test PyPy
-1. Test cases via tox
 
 
 ## Usage
