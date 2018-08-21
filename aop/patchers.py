@@ -4,7 +4,7 @@ from contextlib import suppress
 from functools import update_wrapper
 
 # project
-from .aspect import Aspect
+from .aspect import Aspect, AspectMeta
 from .joinpoint import JoinPoint
 
 
@@ -16,7 +16,7 @@ def patch_class(aspect):
     # patch
     # TypeError: type '_bz2.BZ2Compressor' is not an acceptable base type
     with suppress(TypeError):
-        aspect = type(name, (Aspect, aspect), {})
+        aspect = AspectMeta(name, (Aspect, aspect), {})
     return aspect
 
 

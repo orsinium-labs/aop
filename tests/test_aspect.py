@@ -6,7 +6,7 @@ import pytest
 
 # project
 from aop.advice import Advice
-from aop.aspect import Aspect
+from aop.aspect import Aspect, AspectMeta
 
 
 class Source:
@@ -17,7 +17,7 @@ class Source:
         return 42
 
 
-class Patched(Aspect, Source):
+class Patched(Aspect, Source, metaclass=AspectMeta):
     pass
 
 
@@ -114,3 +114,8 @@ def test_method_check(register_advice):
     instance = Patched()
     result = instance.nothing()
     assert result == 42
+
+
+def test_isinstance_check():
+    instance = Source()
+    assert isinstance(instance, Patched)

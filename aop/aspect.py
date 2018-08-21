@@ -5,7 +5,16 @@ from collections import Callable
 from .joinpoint import JoinPoint
 
 
+class AspectMeta(type):
+    def __instancecheck__(cls, obj):
+        if len(cls.mro()) < 3:
+            return NotImplemented
+        parent = cls.mro()[2]
+        return isinstance(obj, parent) or NotImplemented
+
+
 class Aspect:
+
     def __getattribute__(self, name):
         method = super().__getattribute__(name)
 

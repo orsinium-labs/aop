@@ -49,6 +49,7 @@ This is some troubles that I got when implemented this library.
 
 * Issue: creating class instances before class MRO patching broke `isinstance` checks.
 * Examples: [traitlets](https://github.com/ipython/traitlets/blob/4.3.2/traitlets/config/configurable.py#L421) (used into IPython)
+* Solution: implement `__instancecheck__` for metaclass.
 
 ---
 
