@@ -1,23 +1,26 @@
-# built-in
-import re
-
 # external
 import attr
 
+from .matcher import match
 
-rex_all = re.compile('.*')
+
+match_all = match(regexp='.*')
 
 
 @attr.s
 class Advice:
+    """Advice is a rule for joinpoint processing.
+    """
     handler = attr.ib()
-    paths = attr.ib(default=rex_all)
-    modules = attr.ib(default=rex_all)
-    targets = attr.ib(default=rex_all)
-    methods = attr.ib(default=re.compile('__call__'))
+    paths = attr.ib(default=match_all)
+    modules = attr.ib(default=match_all)
+    targets = attr.ib(default=match_all)
+    methods = attr.ib(default=match(equals='__call__'))
 
 
 class Advices:
+    """Catalog of advices.
+    """
     hashsum = 0
 
     def __init__(self):
