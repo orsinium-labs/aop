@@ -6,6 +6,8 @@ from .joinpoint import JoinPoint
 
 
 class AspectMeta(type):
+    """Metaclass for isinstance() hack
+    """
     def __instancecheck__(cls, obj):
         if len(cls.mro()) < 3:
             return NotImplemented
@@ -14,6 +16,10 @@ class AspectMeta(type):
 
 
 class Aspect:
+    """Patcher for classes.
+
+    Place it as first parent for new class for patching.
+    """
 
     def __getattribute__(self, name):
         method = super().__getattribute__(name)

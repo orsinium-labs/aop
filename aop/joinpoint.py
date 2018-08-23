@@ -10,6 +10,18 @@ from .advice import advices as all_advices
 
 @attr.s()
 class Context:
+    """Context is data class with information about JoinPoint context.
+
+    Target info:
+        aspect: name of target.
+        method: name of called method or ``__call__`` for functions.
+        module: name of module where aspect defined.
+
+    Call info:
+        args: tuple of passed positional args
+        kwargs: dict of passed keyword args
+        result: target's method response
+    """
     aspect = attr.ib()
     method = attr.ib()
     module = attr.ib()
@@ -21,6 +33,8 @@ class Context:
 
 
 class JoinPoint:
+    """Wrapper around function or class method.
+    """
     _method = None
     _advices_cache = None
     _advices_hashsum = None
