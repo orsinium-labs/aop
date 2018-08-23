@@ -8,8 +8,8 @@ import attr
 from .advice import advices as all_advices
 
 
-@attr.s(hash=False)
-class JoinPoint:
+@attr.s()
+class Context:
     aspect = attr.ib()
     method = attr.ib()
     module = attr.ib()
@@ -19,53 +19,60 @@ class JoinPoint:
 
     result = attr.ib(default=None)
 
+
+class JoinPoint:
     _method = None
-    _advices = None
+    _advices_cache = None
     _advices_hashsum = None
+
+    def __init__(self, **kwargs):
+        self._context = Context(**kwargs)
 
     def __getattr__(self, name):
         return getattr(self._method, name)
 
+    def __dir__(self):
+        return dir(self._method)
+
     def __hash__(self):
         return hash(self._method)
 
-    @property
-    def advices(self):
+    def _get_advices(self):
         if self._advices_hashsum == all_advices.hashsum:
-            return self._advices
+            return self._advices_cache
 
         advices = []
         for advice in all_advices:
-            if advice.modules.match(self.module):
-                if advice.methods.match(self.method):
-                    if advice.targets.match(self.aspect):
+            if advice.modules.match(self._context.module):
+                if advice.methods.match(self._context.method):
+                    if advice.targets.match(self._context.aspect):
                         advices.append(advice)
 
-        self._advices = advices
+        self._advices_cache = advices
         self._advices_hashsum = all_advices.hashsum
         return advices
 
     def __call__(self, *args, **kwargs):
-        self.args = args
-        self.kwargs = kwargs
-        advices = [advice.handler(self) for advice in self.advices]
+        self._context.args = args
+        self._context.kwargs = kwargs
+        advices = [advice.handler(self._context) for advice in self._get_advices()]
 
         # joinpoint before aspect call
         [next(advice) for advice in advices]
 
         try:
             # aspect call
-            self.result = self._method(*self.args, **self.kwargs)
+            self._context.result = self._method(*self._context.args, **self._context.kwargs)
         except Exception as e:
             # exception processing
             for advice in advices:
                 with suppress(StopIteration):
                     advice.throw(e)
-            return self.result
+            return self._context.result
 
         # joinpoint after aspect call
         for advice in advices:
             with suppress(StopIteration):
                 next(advice)
 
-        return self.result
+        return self._context.result

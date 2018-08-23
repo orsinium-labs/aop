@@ -11,10 +11,6 @@ class AspectModule:
     def __dir__(self):
         return dir(self._wrapped_module)
 
-    @property
-    def __all__(self):
-        return dir(self._wrapped_module)
-
     def __getattribute__(self, name):
         try:
             obj = super().__getattribute__(name)
@@ -24,6 +20,8 @@ class AspectModule:
             return obj
         if name == '_wrapped_module':
             return obj
+
+        # TODO: check for started
 
         # patch
         obj = patch_object(obj)
