@@ -54,9 +54,12 @@ aop.register(
 )
 ```
 
-Params for `aop.register`:
+Parameters for `aop.register`:
 * `handler` -- advice for joinpoint processing.
-* `paths`
+* `paths` -- expression for path to module.
+* `modules` -- expression for module name.
+* `targets` -- expression for object name.
+* `methods` -- expression for called object's method. It's `__call__` for functions.
 
 
 Handler looks like:
@@ -66,4 +69,34 @@ def multiply(context):
     ...  # before aspect call
     yield
     ...  # after aspect call
+```
+
+Context's properties:
+* `aspect` -- name of target.
+* `method` -- name of called method or `__call__` for functions.
+* `module` -- name of module where aspect defined.
+* `path` --   path to module where aspect defined.
+* `args` --   tuple of passed positional args
+* `kwargs` -- dict of passed keyword args
+* `result` -- target's method response
+
+Register all advices or just enable patching before all other imports in project:
+
+```python
+import aop
+aop.enable()
+...  # all other imports
+```
+
+Also it's recommend finally enable patching after register last advice:
+
+```python
+aop.register(...)
+aop.register(...)
+aop.enable(final=True)
+```
+
+If you want to disable patching:
+```python
+aop.disable()
 ```
