@@ -6,6 +6,7 @@ import attr
 
 # project
 from .advice import advices as all_advices
+from .state import state
 
 
 @attr.s()
@@ -70,6 +71,9 @@ class JoinPoint:
         return advices
 
     def __call__(self, *args, **kwargs):
+        if not state.active:
+            return self._method(*args, **kwargs)
+
         self._context.args = args
         self._context.kwargs = kwargs
         advices = [advice.handler(self._context) for advice in self._get_advices()]

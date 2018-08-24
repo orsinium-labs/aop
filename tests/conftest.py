@@ -3,6 +3,10 @@ import pytest
 
 # project
 from aop.advice import advices
+from aop.state import state
+
+
+state.active = True
 
 
 @pytest.fixture()
