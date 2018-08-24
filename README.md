@@ -100,3 +100,20 @@ If you want to disable patching:
 ```python
 aop.disable()
 ```
+
+## Patch import system automatically
+
+Now this package can't patch modules that imported before `aop.enable()` or `aop.register(...)`:
+
+```bash
+$ python3 special_cases/2_after.py
+...
+AssertionError: not patched
+```
+
+Although you can run your script via aop runner:
+
+```bash
+$ python3 -m aop special_cases/2_after.py
+cos (0,) {}
+```
