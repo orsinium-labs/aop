@@ -101,6 +101,12 @@ If you want to disable patching:
 aop.disable()
 ```
 
+Inspect object:
+
+```python
+aop.inspect(math.isclose, print=True)
+```
+
 ## Patch import system automatically
 
 Now this package can't patch modules that imported before `aop.enable()` or `aop.register(...)`:
