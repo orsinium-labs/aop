@@ -16,15 +16,17 @@ class Context:
         aspect: name of target.
         method: name of called method or ``__call__`` for functions.
         module: name of module where aspect defined.
+        path:   path to module where aspect defined.
 
     Call info:
-        args: tuple of passed positional args
+        args:   tuple of passed positional args
         kwargs: dict of passed keyword args
         result: target's method response
     """
     aspect = attr.ib()
     method = attr.ib()
     module = attr.ib()
+    path = attr.ib()
 
     args = attr.ib(default=None)
     kwargs = attr.ib(default=None)
@@ -57,10 +59,11 @@ class JoinPoint:
 
         advices = []
         for advice in all_advices:
-            if advice.modules.match(self._context.module):
-                if advice.methods.match(self._context.method):
-                    if advice.targets.match(self._context.aspect):
-                        advices.append(advice)
+            if advice.paths.match(self._context.path):
+                if advice.modules.match(self._context.module):
+                    if advice.methods.match(self._context.method):
+                        if advice.targets.match(self._context.aspect):
+                            advices.append(advice)
 
         self._advices_cache = advices
         self._advices_hashsum = all_advices.hashsum

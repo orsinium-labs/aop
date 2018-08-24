@@ -3,6 +3,7 @@ from collections import Callable
 
 # project
 from .joinpoint import JoinPoint
+from .helpers import ObjectInfo
 
 
 class AspectMeta(type):
@@ -33,9 +34,11 @@ class Aspect:
             return method
 
         # prepare and return joinpoint
+        info = ObjectInfo(self)
         joinpoint = JoinPoint(
-            aspect=self.__class__.__name__,
-            module=self.__module__,
+            aspect=info.name,
+            module=info.module_name,
+            path=info.module_path,
             method=name,
         )
         joinpoint._method = method

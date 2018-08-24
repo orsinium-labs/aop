@@ -6,6 +6,7 @@ from functools import update_wrapper
 # project
 from .aspect import Aspect, AspectMeta
 from .joinpoint import JoinPoint
+from .helpers import ObjectInfo
 
 
 def patch_class(aspect):
@@ -25,10 +26,12 @@ def patch_function(aspect):
     if not module:
         module = aspect.__module__ = getattr(aspect.__globals__['__spec__'], 'name', '')
 
+    info = ObjectInfo(aspect)
     joinpoint = JoinPoint(
-        aspect=aspect.__name__,
+        aspect=info.name,
         method='__call__',
-        module=module,
+        module=info.module_name,
+        path=info.module_path,
     )
     joinpoint._method = aspect
     return update_wrapper(joinpoint, aspect)
