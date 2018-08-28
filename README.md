@@ -1,5 +1,8 @@
 # AOP
 
+> Badges? We ain’t got no badges! We don’t need no badges! I don’t have to show you any stinking badges!
+> - [The Treasure of the Sierra Madre](https://www.youtube.com/watch?v=wHxgQopPMRE)
+
 [Aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
 
 Features:
