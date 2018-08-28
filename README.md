@@ -42,7 +42,9 @@ math.cos(0)
 ```
 
 
-# Usage
+## Usage
+
+### Register
 
 Register new advice:
 
@@ -55,12 +57,24 @@ aop.register(
 ```
 
 Parameters for `aop.register`:
+
 * `handler` -- advice for joinpoint processing.
 * `paths` -- expression for path to module.
 * `modules` -- expression for module name.
 * `targets` -- expression for object name.
 * `methods` -- expression for called object's method. It's `__call__` for functions.
 
+### Match
+
+Available kwargs for `aop.match`:
+
+* `regexp` -- object name fully match to regular expression.
+* `startswith` -- object name starts with specified string.
+* `endswith` -- object name ends with specified string.
+* `contains` -- object contains specified string.
+* `equals` -- object name equal to specified string.
+
+### Handler and context
 
 Handler looks like:
 
@@ -79,6 +93,8 @@ Context's properties:
 * `args` --   tuple of passed positional args
 * `kwargs` -- dict of passed keyword args
 * `result` -- target's method response
+
+### Enable and disable
 
 Register all advices or just enable patching before all other imports in project:
 
@@ -101,11 +117,14 @@ If you want to disable patching:
 aop.disable()
 ```
 
+### Inspect
+
 Inspect object:
 
 ```python
 aop.inspect(math.isclose, print=True)
 ```
+
 
 ## Patch import system automatically
 
