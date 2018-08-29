@@ -1,4 +1,4 @@
-# AOP
+# ![AOP](./assets/logo.png)
 
 > Badges? We ain’t got no badges! We don’t need no badges! I don’t have to show you any stinking badges!
 > - [The Treasure of the Sierra Madre](https://www.youtube.com/watch?v=wHxgQopPMRE)
