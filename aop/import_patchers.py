@@ -1,16 +1,19 @@
 # built-in
+import builtins
 import sys
 from os import getcwd
 from types import ModuleType
 from _frozen_importlib_external import PathFinder
 
 # project
+from .aspect import AspectObject
 from .hooks import AspectFinder
 from .module import AspectModule, unwrap_module, wrap_module
 from .patchers import patch_object
 
 
 CWD = getcwd()
+source_object = builtins.object
 
 
 def patch_cache():
@@ -54,3 +57,11 @@ def patch_project(path=CWD):
                 setattr(module, obj_name, wrap_module(obj))
         else:
             setattr(module, obj_name, patch_object(obj))
+
+
+def patch_builtins():
+    builtins.object = AspectObject
+
+
+def unpatch_builtins():
+    builtins.object = source_object

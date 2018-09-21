@@ -6,7 +6,7 @@ import pytest
 
 # project
 from aop.advice import Advice
-from aop.aspect import Aspect, AspectMeta
+from aop.aspect import AspectObject, Aspect, AspectMeta
 
 
 class Source:
@@ -17,8 +17,16 @@ class Source:
         return 42
 
 
-class Patched(Aspect, Source, metaclass=AspectMeta):
+class PatchedViaMeta(Aspect, Source, metaclass=AspectMeta):
     pass
+
+
+class Patched(AspectObject):
+    def check_me(self, a, b=None):
+        return '{}|{}'.format(a, b)
+
+    def nothing(self):
+        return 42
 
 
 def test_naive(register_advice):
@@ -118,4 +126,4 @@ def test_method_check(register_advice):
 
 def test_isinstance_check():
     instance = Source()
-    assert isinstance(instance, Patched)
+    assert isinstance(instance, PatchedViaMeta)

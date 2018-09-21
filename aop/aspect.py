@@ -9,6 +9,13 @@ from .helpers import ObjectInfo
 class AspectMeta(type):
     """Metaclass for isinstance() hack
     """
+
+    def __new__(cls, name, bases, namespace, **kwargs):
+        # if aspect not in mro yet
+        if not {'Aspect', 'AspectObject'} & {base.__name__ for base in bases}:
+            bases = (Aspect, ) + bases
+        return super().__new__(cls, name, bases, namespace)
+
     def __instancecheck__(cls, obj):
         if len(cls.mro()) < 3:
             return NotImplemented
@@ -44,3 +51,9 @@ class Aspect:
         joinpoint._method = method
         setattr(self, name, joinpoint)  # save joinpoint
         return joinpoint
+
+
+class AspectObject(object, metaclass=AspectMeta):
+    """Patched object with Aspect as first class in mro.
+    """
+    pass

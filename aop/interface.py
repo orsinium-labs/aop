@@ -34,6 +34,7 @@ def enable(*, force=False, final=False):
     patchers.patch_import()
     patchers.patch_cache()
     patchers.patch_project()
+    patchers.patch_builtins()
     return True
 
 
@@ -45,6 +46,7 @@ def disable():
     state.active = False
     patchers.unpatch_import()
     patchers.unpatch_cache()
+    patchers.unpatch_builtins()
 
 
 def register(handler, **kwargs):
