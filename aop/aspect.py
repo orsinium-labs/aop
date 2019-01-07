@@ -52,6 +52,23 @@ class Aspect:
         setattr(self, name, joinpoint)  # save joinpoint
         return joinpoint
 
+    def __call__(self, *args, **kwargs):
+        # get cached joinpoint from __dict__
+        joinpoint = self.__dict__.get('__call__')
+        if joinpoint is not None:
+            return joinpoint(*args, **kwargs)
+
+        info = ObjectInfo(self)
+        joinpoint = JoinPoint(
+            aspect=info.name,
+            module=info.module_name,
+            path=info.module_path,
+            method='__call__',
+        )
+        joinpoint._method = super().__call__
+        setattr(self, '__call__', joinpoint)  # save joinpoint
+        return joinpoint(*args, **kwargs)
+
 
 class AspectObject(object, metaclass=AspectMeta):
     """Patched object with Aspect as first class in mro.
